@@ -1,0 +1,4 @@
+/node_modules/
+/blog_1/node_modules/
+/mysql-test/node_modules/
+/redis_test/node_modules/
