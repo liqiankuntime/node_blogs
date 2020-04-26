@@ -26,7 +26,7 @@ const handleBlogRouter = (req, res) => {
             //未登陆
             return loginCheckRes
         }
-        req.body.author = '马斯';//假的登陆人，待开发登陆时完善为真实数据
+        //req.body.author = '马斯';//假的登陆人，待开发登陆时完善为真实数据
         const insertResult = newBlog(req.body);
         return insertResult.then(insertData=> {
             return new SuccessModel(insertData, "创建成功！")

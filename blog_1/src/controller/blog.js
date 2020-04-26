@@ -1,4 +1,5 @@
 const { exec } = require('../db/mysql');
+const xss = require('xss');
 //1、获取列表
 /**
  * 
@@ -57,15 +58,18 @@ const getDetail = (id='') => {
 
 //3、新建一个博客
 const newBlog = (blogData ={}) => {
-    console.log('newBlog:', blogData)
+    const title = xss(blogData.title);
+    const author = blogData.author;
+    const content = xss(blogData.content);
     //blogData 是一个博客对象 
     //{title: '', content:'', authord: '', createTime: ''}
 
     let createtime = Date.now();
     //这里的${blogData.title} 外面不加引号，会报错
     let sql = `insert into blogs (title, author, content, createtime)
-        values ('${blogData.title}', '${blogData.author}', '${blogData.content}', ${createtime})
+        values ('${title}', '${author}', '${content}', ${createtime})
     `
+    console.log('newBlog:', sql)
     return exec(sql).then(insertData => {
         console.log('cont:', insertData);
         return {

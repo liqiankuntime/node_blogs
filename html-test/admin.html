@@ -99,7 +99,10 @@
                 $tableContainer.append($(`
                     <tr>
                         <td>
-                            <a href="/detail.html?id=${item.id}" target="_blank">${item.title}</a>
+                            <a 
+                            href="/detail.html?id=${item.id}" 
+                            target="_blank">${item.title}</a>
+                            <span>${item.content}</span>
                         </td>
                         <td>
                             <a href="/edit.html?id=${item.id}">编辑</a>
