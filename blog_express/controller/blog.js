@@ -56,6 +56,7 @@ const getDetail = (id='') => {
 
 //3、新建一个博客
 const newBlog = (blogData ={}) => {
+    console.log('blog::', blogData);
     const title = xss(blogData.title);
     const author = blogData.author;
     const content = xss(blogData.content);
@@ -67,6 +68,7 @@ const newBlog = (blogData ={}) => {
     let sql = `insert into blogs (title, author, content, createtime)
         values ('${title}', '${author}', '${content}', ${createtime})
     `
+    console.log('newSql:', sql);
     return exec(sql).then(insertData => {
         return {
             id: insertData.insertId

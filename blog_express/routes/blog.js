@@ -7,7 +7,54 @@ const {
     updateBlog,
     delBlog
 } = require('../controller/blog');
+const loginCheck = require('../middleware/loginCheck');
 const { SuccessModel, ErrorModel} = require('../model/resmodel');
+
+
+router.post('/new', loginCheck, (req,res, next) => {
+    //req.body.author = '马斯';//假的登陆人，待开发登陆时完善为真实数据
+    req.body.author = req.session.username
+    const insertResult = newBlog(req.body);
+    return insertResult.then(insertData=> {
+        res.json( new SuccessModel(insertData, "创建成功！") );
+        return;
+    })
+})
+
+router.post('/del', loginCheck, (req,res, next) => {
+    let id = req.query.id;
+    let deleteResult = delBlog(id, req.session.username);//'马斯');
+    console.log('deee::', id);
+    return deleteResult.then( deleData => {
+        console.log('deleteData:', deleData);
+        if(deleData){
+            res.json( new SuccessModel(deleData, '删除成功') );
+            return; 
+        }else{
+            res.json( new ErrorModel(deleData, '删除失败') );
+            return;
+        }
+    })
+})
+
+
+router.post('/update', loginCheck, (req,res, next) => {
+    //req.body.author = '马斯';//假的登陆人，待开发登陆时完善为真实数据
+    let id = req.query.id;
+    req.body.author = req.session.username
+    let updateResult = updateBlog(id, req.body);
+    return updateResult.then( updateData => {
+        console.log('updata::', updateData);
+        if(updateData){
+            res.json( new SuccessModel(updateData, '更新成功！'));
+            return;
+        }else {
+            res.json( new ErrorModel(updateData, '更新失败！') );
+            return;
+        }
+    })
+})
+
 
 router.get('/list', (req, res, next) => {
     let author = req.body.author || '';
@@ -35,10 +82,15 @@ router.get('/list', (req, res, next) => {
 })
 
 router.get('/detail', (req, res, next) => {
-    res.json({
-        errorno: 0,
-        data: 'detail content'
+    let id = req.query.id;
+    let detailResult = getDetail(id);
+    return detailResult.then( detailData => {
+        res.json(
+            new SuccessModel(detailData, '查询成功！')
+        );
+        return;
     })
+
 })
 
 module.exports = router;
