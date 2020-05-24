@@ -46,6 +46,7 @@
     <script>
         // 发送 get 请求
         function get(url) {
+            console.log('url::', url)
             return $.get(url)
         }
 
@@ -84,7 +85,7 @@
         if (urlParams.keyword) {
             url += '&keyword=' + urlParams.keyword
         }
-
+        console.log('uuuu::', url);
         // 加载数据
         get(url).then(res => {
             if (res.errno !== 0) {
@@ -94,7 +95,8 @@
             }
 
             // 显示数据
-            const data = res.data || []
+            const data = res.data || [];
+            console.log('daa::', data);
             data.forEach(item => {
                 $tableContainer.append($(`
                     <tr>

@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -23,6 +25,24 @@ app.use(bodyParser.json());//类似 getPostData
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+const redisClient = require('./db/redis');
+const sessionStore = new RedisStore({
+  client: redisClient
+})
+
+app.use(
+  session({
+    secret: 'Blog_Node$8543%#',
+    cookie: {
+      path: '/', //默认配置
+      httpOnly: true, //默认配置
+      maxAge: 24*60*60*1000 //最大时间是24小时，过了24小时这个会话就过期
+    },
+    store: sessionStore
+  })
+)
 
 app.use('/', index);
 app.use('/users', users);

@@ -16,7 +16,6 @@ const getList = (author='', keyword='') => {
         sql += `and title like %"${keyword}"% `;
     }
     sql += 'order by createtime desc';
-    console.log('list::', sql);
     return exec(sql);
     //先暂时返回假数据
     return [
@@ -68,9 +67,7 @@ const newBlog = (blogData ={}) => {
     let sql = `insert into blogs (title, author, content, createtime)
         values ('${title}', '${author}', '${content}', ${createtime})
     `
-    console.log('newBlog:', sql)
     return exec(sql).then(insertData => {
-        console.log('cont:', insertData);
         return {
             id: insertData.insertId
         }
@@ -87,13 +84,11 @@ const newBlog = (blogData ={}) => {
  * @param {*} blogData 更新博客的内容
  */
 const updateBlog = (id, blogData={}) => {
-    console.log('updata:', id, blogData);
     let sql = `update blogs set 
     title ='${blogData.title}', 
     content ='${blogData.content}' 
     where id =${id} `;
     return exec(sql).then( updateData => {
-        console.log('updateData:', updateData);
         if(updateData.affectedRows > 0){
             return true;
         }
@@ -110,7 +105,6 @@ const updateBlog = (id, blogData={}) => {
 const delBlog = (id, author) => {
     let sql = `delete from blogs where id=${id} and author='${author}' `;
     return exec(sql).then( deleData => {
-        console.log('dele:', deleData);
         if(deleData.affectedRows >0){
             return true;
         };
