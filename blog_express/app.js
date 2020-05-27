@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+const fs = require('fs');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -20,7 +21,20 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+if(process.env.NODE_ENV == 'dev'){
+  app.use(logger('dev'));
+}else {
+  let logFileName = path.join(__dirname, 'logs', 'access.log');
+  let writeStream = fs.createWriteStream(logFileName, {flags: 'a'});
+  app.use( logger('combined', {
+    stream: writeStream
+  }))
+}
+
+
+
+
 app.use(bodyParser.json());//类似 getPostData
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
