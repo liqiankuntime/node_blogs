@@ -1,8 +1,8 @@
 const { ErrorModal} = require('../model/resmodel');
 
 module.exports = async (ctx, next) => {
-    console.log('check::', req.session.username)
-    if(req.session.username){
+    console.log('check::', ctx.session.username)
+    if(ctx.session.username){
         await next();
         return;
     }

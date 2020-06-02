@@ -8,6 +8,9 @@ const logger = require('koa-logger')
 const session = require('koa-generic-session');
 const redisStore = require('koa-redis')
 const { REDIS_CONF } = require('./conf/db')
+const path = require('path');
+const fs = require('fs');
+const morgan = require('koa-morgan');
 
 
 const index = require('./routes/index')
@@ -37,6 +40,16 @@ app.use(async (ctx, next) => {
 	const ms = new Date() - start
 	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+console.log('start:', process.env.NODE_ENV)
+if(process.env.NODE_ENV == 'dev'){
+	app.use(morgan('dev'));
+  }else {
+	let logFileName = path.join(__dirname, 'logs', 'access.log');
+	let writeStream = fs.createWriteStream(logFileName, {flags: 'a'});
+	app.use( morgan('combined', {
+	  stream: writeStream
+	}))
+  }
 
 //session配置
 app.keys = ['tksr_key$_end']

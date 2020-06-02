@@ -13,10 +13,13 @@ router.prefix('/api/blog')//前缀·/users/bar
 
 //1、增
 router.post('/new', loginCheck, async (ctx, next) => {
-    //req.body.author = '马斯';//假的登陆人，待开发登陆时完善为真实数据
-    ctx.body.author = ctx.session.username;
 
-    const insertData = await newBlog(ctx.body);
+    console.log('ctxx::', ctx, '<ctxend', ctx.request.body)
+    //req.body.author = '马斯';//假的登陆人，待开发登陆时完善为真实数据
+    let body = ctx.request.body
+    body.author = ctx.session.username;
+
+    const insertData = await newBlog(body);
     ctx.body = new SuccessModel(insertData, "创建成功！");
     return;
     //对比下面的写法
@@ -87,6 +90,7 @@ router.post('/update', loginCheck, async (ctx, next) => {
 })
 //4、查
 router.get('/list', async (ctx, next) => {
+    console.log('1list::', ctx, '<1list', ctx.query)
     const query = ctx.query;
     let author = query.author || '';
     const keyword = query.keyword || '';
@@ -105,6 +109,7 @@ router.get('/list', async (ctx, next) => {
     }
 
     let listData = await getList(author, keyword);
+    console.log('listData:', listData)
     ctx.body = new SuccessModel(listData, '查询成果！')
     return;
     //对比下面的写法

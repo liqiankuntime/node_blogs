@@ -380,3 +380,68 @@ let process =  {
           '/Users/liqiankun/node_modules',
           '/Users/node_modules',
           '/node_modules' ] } } 
+
+
+
+
+
+
+let ctx = {
+  request: {
+    method: 'POST',
+    url: '/api/blog/new',
+    header: {
+      host: 'localhost',
+      connection: 'close',
+      'content-length': '58',
+      accept: '*/*',
+      'x-requested-with': 'XMLHttpRequest',
+      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+      'content-type': 'application/json',
+      origin: 'http://localhost:8080',
+      'sec-fetch-site': 'same-origin',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-dest': 'empty',
+      referer: 'http://localhost:8080/new.html',
+      'accept-encoding': 'gzip, deflate, br',
+      'accept-language': 'zh-CN,zh;q=0.9',
+      cookie: 'koa.sid=IeNIdi8efpP4dcDx0Gz246aoM6lJsO5_; koa.sid.sig=8cBVt1aGCFX-8D9lKKwLfreMJtc'
+    }
+  },
+  response: { status: 404, message: 'Not Found', header: {} },
+  app: { subdomainOffset: 2, proxy: false, env: 'dev' },
+  originalUrl: '/api/blog/new',
+  req: '<original node req>',
+  res: '<original node res>',
+  socket: '<original node socket>'
+}
+
+let ctx2 = {
+  request: {
+    method: 'POST',
+    url: '/api/blog/new',
+    header: {
+      host: 'localhost',
+      connection: 'close',
+      'content-length': '31',
+      accept: '*/*',
+      'x-requested-with': 'XMLHttpRequest',
+      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+      'content-type': 'application/json',
+      origin: 'http://localhost:8080',
+      'sec-fetch-site': 'same-origin',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-dest': 'empty',
+      referer: 'http://localhost:8080/new.html',
+      'accept-encoding': 'gzip, deflate, br',
+      'accept-language': 'zh-CN,zh;q=0.9',
+      cookie: 'koa.sid=IeNIdi8efpP4dcDx0Gz246aoM6lJsO5_; koa.sid.sig=8cBVt1aGCFX-8D9lKKwLfreMJtc'
+    }
+  },
+  response: { status: 404, message: 'Not Found', header: {} },
+  app: { subdomainOffset: 2, proxy: false, env: 'dev' },
+  originalUrl: '/api/blog/new',
+  req: '<original node req>',
+  res: '<original node res>',
+  socket: '<original node socket>'
+}
